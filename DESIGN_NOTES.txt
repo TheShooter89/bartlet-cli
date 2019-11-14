@@ -1,0 +1,5 @@
+To install completion you have to run 'bartlet-cli --setup'
+then,
+to tab completion to take effect you need to 'refresh' .bash_profile:
+run 'source ~/.bash_profile'
+see https://github.com/f/omelette/issues/1#issuecomment-45525021
