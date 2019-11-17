@@ -1,22 +1,18 @@
 import omelette from 'omelette';
-import { build } from "gluegun";
+import {
+  build,
+  filesystem,
+} from "gluegun";
+
+const fs = require('fs');
+const readline = require('readline');
+const util = require('util');
 
 /**
  * Create the cli and kick it off
  */
 async function run () {
-  // LEGACY
-  //let complete = omelette(`bartlet-cli <name> <surname>`);
-  
-  // TESTING
-  let complete = omelette(`bartlet-cli`);
-  /* const comp_tree = {
-    name: ['franz', 'tanque'],
-    surname: ['paoletti', 'denis'],
-    test(){
-      return ['passed', 'failed'];
-    },
-  }; */
+  let complete = omelette(`bartlet-cli <create | add | init | import | config>`);
   const comp_tree = {
     create: {
       react: {
@@ -38,22 +34,16 @@ async function run () {
       template: ['fake/template/path/']
     },
     init: ['alternative/project/dir/',],
-    config: ['',],
+    //config: ['',],
+    config(){
+      // TODO - EXPERIMENTING
+    },
     import: {
       template: ['path/to/template/file/',]
     },
   };
   complete.tree(comp_tree);
   
-  /* complete.on('name', ({reply}) => {
-    reply(['franz2', 'tanque2']);
-  });
-
-  complete.on('surname', ({reply}) => {
-    reply(['paoletti2', 'denis2']);
-  }); */
-
-  //console.log('Hello bartlet-cli test!');
   complete.init();
 
   if(process.argv.indexOf('--setup') > -1){
@@ -70,17 +60,11 @@ run: 'source ~/.bash_profile'
 see https://github.com/f/omelette/issues/1#issuecomment-45525021`
       )
       complete.setupShellInitFile();
-      console.log('...DONE!')
     } catch(err){
       console.log('error occurred: ', err)
     }
   }
 
-  console.log('---------------- START OF DEBUG LOG ----------------');
-  console.log('process.argv: ', process.argv);
-  console.log('process.argv.indexOf(\'--setup\'): ', process.argv.indexOf('--setup'));
-  console.log('----------------- END OF DEBUG LOG -----------------');
-  
   const cli = build()
     .brand('bartlet-cli')
     .src(__dirname)
@@ -89,7 +73,7 @@ see https://github.com/f/omelette/issues/1#issuecomment-45525021`
     .create()
 
   const toolbox = await cli.run(process.argv);
-  
+
   // send it back (for testing, mostly)
   return toolbox;
 }
