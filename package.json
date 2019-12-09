@@ -13,7 +13,8 @@
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",
-    "count": "cloc ./"
+    "count": "cloc ./",
+    "postinstall": "bartlet-cli --setup && source ~/.bash_profile"
   },
   "files": [
     "src",

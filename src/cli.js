@@ -12,35 +12,12 @@ const util = require('util');
  * Create the cli and kick it off
  */
 async function run () {
-  let complete = omelette(`bartlet-cli <create | add | init | import | config>`);
+  let complete = omelette(`bartlet-cli | bt`);
   const comp_tree = {
-    create: {
-      react: {
-        component: ['src/components/',],
-        hook: ['src/hooks/',],
-        context: ['src/contexts/',],
-      },
-      node: {
-        module: {
-          es6: ['src/',],
-          'common-js': ['src/',],
-        }
-      },
-      vanilla: {
-        script: ['workdir',]
-      },
-    },
-    add: {
-      template: ['fake/template/path/']
-    },
-    init: ['alternative/project/dir/',],
-    //config: ['',],
-    config(){
-      // TODO - EXPERIMENTING
-    },
-    import: {
-      template: ['path/to/template/file/',]
-    },
+    react: ['component', 'hook', 'context',],
+    next: ['page',],
+    node: ['es6', 'cjs',],
+    'import-template': ['',],
   };
   complete.tree(comp_tree);
   
