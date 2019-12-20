@@ -27,6 +27,8 @@
   "dependencies": {
     "esm": "^3.2.25",
     "gluegun": "latest",
+    "inquirer": "^7.0.0",
+    "inquirer-file-tree-selection-prompt": "^1.0.3",
     "omelette": "^0.4.12"
   },
   "devDependencies": {

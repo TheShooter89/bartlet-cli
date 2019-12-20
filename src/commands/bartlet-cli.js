@@ -5,6 +5,7 @@ const command = {
       print
     } = toolbox;
     print.info('Welcome to your CLI')
+    toolbox.printHeader();
   }
 }
 
