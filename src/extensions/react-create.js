@@ -1,5 +1,5 @@
 export default (toolbox) => {
-    toolbox.createReact = async (config) => {
+    toolbox.reactCreate = async (config) => {
         //toolbox.print.info(`called 'print-header' extension`)
 
         const colorprint = toolbox.print.colors;
