@@ -12,7 +12,7 @@ module.exports = {
 
     await generate({
       template: 'model.js.ejs',
-      target: `models/${name}-model.js`,
+      target: `models/${name}/${name}-model.js`,
       props: { name }
     })
 
