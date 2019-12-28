@@ -5,6 +5,7 @@ export default {
     name: 'context',
     description: 'Create a React context',
     dashed: true,
+    __DEBUG_MODE: true,
     run: async toolbox => {
         const {
             parameters,
@@ -12,42 +13,54 @@ export default {
             print: { info },
             strings,
         } = toolbox;
-        const colorprint = toolbox.print.colors;
-
-        console.log('testing \'react component\' command');
+        
+        // Print app header
         toolbox.printHeader();
 
-        const name = parameters.first;
-        //console.log('first parameter is: ', name);
-
+        // Select React prompt steps
         const questions = toolbox.reactSteps();
-        // herebelow happens the magic...
+        
+        // Remove the prompt about template selection, we already know is: context
         questions.shift();
 
+        // Inject file selection support to inquirer
         inquirer.registerPrompt('path', selectPath);
 
-        inquirer.prompt(questions).then(answers => {
+        // Simple debug switcher
+        const __DEBUG_MODE = false;
+
+        inquirer.prompt(questions).then(async answers => {
+            // Set root template type
             answers.type = 'react';
 
-            toolbox.print.info(`New ${answers.name} ${strings.startCase(answers.template)} will be created!`);
-            toolbox.print.info(JSON.stringify(answers, null, '  '));
-
-            // TESTING
-            // ### setting the default step
-            answers.template = 'context';
-
-            const out_template = 'react-' + answers.template;
-            const out_target = answers.path + '/' + answers.name;
-            toolbox.fileOut(answers, out_target + `/index.js`, 'react-index').then(() => {
-                //console.log('doneeeeeeeeeee');
-                //process.exit();
-                toolbox.fileOut(answers, out_target + `/${answers.name}.js`, out_template).then(() => {
-                    //
-                });
-            }).finally(() => {
-                process.exit();
+            // DEBUGGING
+            if (__DEBUG_MODE) {
                 //
+                toolbox.print.info(`New ${answers.name} ${strings.startCase(answers.template)} will be created!`);
+                toolbox.print.info(JSON.stringify(answers, null, '  '));
+            }
+
+            // ### Setting 'context' back inside answers obj
+            answers.template = 'context';
+            // [DEBUG] Check it is correctly added
+            __DEBUG_MODE ? toolbox.print.info('new answers.template: ' + JSON.stringify(answers.template)) : null;
+            
+            // Write a new folder containing index.js and context code file
+            await toolbox.folderOut({
+                props: answers,
+                target: answers.path,
+                folder_name: answers.name,
+                index_template: `${answers.type}-index`,
+                file_template: `${answers.type}-${answers.template}`,
             });
+
+            await toolbox.fileOut({
+                props: answers,
+                target: `${answers.path}/${answers.name}/${answers.name}.css`,
+                template: `${answers.type}-${answers.template}-css`,
+            });
+
+            process.exit();
         });
         
         //
