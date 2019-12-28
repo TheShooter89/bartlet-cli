@@ -1,3 +1,5 @@
+// #### CONTEXT ####
+
 <% if (props.type === 'react') {%>import React<% if (props.features.length > 0) {%>, {
   <% if(props.features.includes('state')) {%>useState,<% } if(props.features.includes('effect')) {%>
   useEffect,<% } %>

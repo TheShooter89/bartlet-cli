@@ -5,6 +5,7 @@ export default {
     name: 'hook',
     description: 'Create a React Hook',
     dashed: true,
+    __DEBUG_MODE: true,
     run: async toolbox => {
         const {
             parameters,
@@ -12,30 +13,39 @@ export default {
             print: { info },
             strings,
         } = toolbox;
-        const colorprint = toolbox.print.colors;
-
-        console.log('testing \'react component\' command');
+        
+        // Print app header
         toolbox.printHeader();
 
-        const name = parameters.first;
-        //console.log('first parameter is: ', name);
-
+        // Select React prompt steps
         const questions = toolbox.reactSteps();
-        // herebelow happens the magic...
+        
+        // Remove the prompt about template selection, we already know is: hook
         questions.shift();
 
+        // Inject file selection support to inquirer
         inquirer.registerPrompt('path', selectPath);
 
+        // Simple debug switcher
+        const __DEBUG_MODE = false;
+
         inquirer.prompt(questions).then(answers => {
+            // Set root template type
             answers.type = 'react';
 
-            toolbox.print.info(`New ${answers.name} ${strings.startCase(answers.template)} will be created!`);
-            toolbox.print.info(JSON.stringify(answers, null, '  '));
+            // DEBUGGING
+            if (__DEBUG_MODE) {
+                //
+                toolbox.print.info(`New ${answers.name} ${strings.startCase(answers.template)} will be created!`);
+                toolbox.print.info(JSON.stringify(answers, null, '  '));
+            }
 
-            // TESTING
-            // ### setting the default step
+            // ### Setting 'hook' back inside answers obj
             answers.template = 'hook';
-            toolbox.print.info('new answers.template: ' + JSON.stringify(answers.template));
+            // [DEBUG] Check it is correctly added
+            __DEBUG_MODE ? toolbox.print.info('new answers.template: ' + JSON.stringify(answers.template)) : null;
+            
+            // Write a new folder containing index.js and hook code file
             toolbox.folderOut({
                 props: answers,
                 target: answers.path,
@@ -44,10 +54,15 @@ export default {
                 file_template: `${answers.type}-${answers.template}`,
             }).then(() => {
                 //console.log('doneeeeeeeeeee');
+                toolbox.fileOut({
+                    props: answers,
+                    target: `${answers.path}/${answers.name}/${answers.name}.css`,
+                    template: `${answers.type}-${answers.template}-css`,
+                }).then(() => {
+                    //
+                    process.exit();
+                });
             });
-        }).finally(() => {
-            //
-            //process.exit();
         });
         
         //

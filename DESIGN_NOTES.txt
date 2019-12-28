@@ -3,3 +3,19 @@ then,
 to tab completion to take effect you need to 'refresh' .bash_profile:
 run 'source ~/.bash_profile'
 see https://github.com/f/omelette/issues/1#issuecomment-45525021
+
+////////
+
+reactSteps - answers object:
+{
+    "template": "component",
+    "features": [
+        "rbx",
+        "state",
+        "effect",
+        "router"
+    ],
+    "name": "testApp",
+    "path": "/home/franz/projects/seri/bartlet-cli",
+    "type": "react"
+}
