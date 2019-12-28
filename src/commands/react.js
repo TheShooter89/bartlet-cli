@@ -32,11 +32,10 @@ export default {
 
             // TESTING
             toolbox.reactCreate(answers).then(() => {
-                console.log('doneeeeeeeeeee');
+                //console.log('doneeeeeeeeeee');
             });
         }).finally(() => {
             //
-            console.log('finalllllyyy done');
             process.exit();
         });
         

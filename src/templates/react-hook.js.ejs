@@ -1,0 +1,35 @@
+<% if (props.type === 'react') {%>import React<% if (props.features.length > 0) {%>, {
+  <% if(props.features.includes('state')) {%>useState,<% } if(props.features.includes('effect')) {%>
+  useEffect,<% } %>
+}<% } %> from 'react'<% }
+if (props.features.includes('rbx')) {%>
+
+// Bulma component library "rbx"
+import {
+  Title,
+} from 'rbx'
+import "rbx/index.css"<% } 
+if(props.features.includes('router')) {%>
+
+// React Router
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+} from 'react-router-dom'<% }%>
+
+import './<%=props.name%>.css';
+
+const <%=props.name[0].toUpperCase() + props.name.slice(1)%> = () => {<% if(props.features.includes('state')) {%>
+  const [ state, setState ] = useState('test');
+  <% } %>
+  console.log('Launching <%=props.name%>!!');
+  
+  return (
+      <React.Fragment>
+          <h1 className='<%=props.name%>__title'>Testing <%=props.name%>! And state: ${state}</h1>
+      </React.Fragment>
+  );
+};
+
+export default <%=props.name[0].toUpperCase() + props.name.slice(1)%>;

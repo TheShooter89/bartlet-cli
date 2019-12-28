@@ -1,13 +1,49 @@
+import inquirer from "inquirer";
+import selectPath from "inquirer-file-tree-selection-prompt";
+
 export default {
     name: 'component',
     description: 'Create a React functional component',
     dashed: true,
     run: async toolbox => {
-        const generate = toolbox.createReact();
-        generate({
-            name: 'bla',
-            path: 'prova',
-        });
+        const {
+            parameters,
+            template: { generate },
+            print: { info },
+            strings,
+        } = toolbox;
+        const colorprint = toolbox.print.colors;
+
         console.log('testing \'react component\' command');
+        toolbox.printHeader();
+
+        const name = parameters.first;
+        //console.log('first parameter is: ', name);
+
+        const questions = toolbox.reactSteps();
+        // herebelow happens the magic...
+        questions.shift();
+
+        inquirer.registerPrompt('path', selectPath);
+
+        inquirer.prompt(questions).then(answers => {
+            answers.type = 'react';
+
+            toolbox.print.info(`New ${answers.name} ${strings.startCase(answers.template)} will be created!`);
+            toolbox.print.info(JSON.stringify(answers, null, '  '));
+
+            // TESTING
+            // ### setting the default
+            answers.template = 'component';
+            toolbox.reactCreate(answers).then(() => {
+                console.log('doneeeeeeeeeee');
+            });
+        }).finally(() => {
+            //
+            //console.log('finalllllyyy done');
+            process.exit();
+        });
+        
+        //
     },
 };
