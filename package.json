@@ -2,7 +2,7 @@
   "name": "bartlet-cli",
   "version": "0.1.1",
   "description": "bartlet-cli CLI",
-  "private": true,
+  "private": false,
   "bin": {
     "bartlet-cli": "bin/bartlet-cli"
   },
@@ -14,7 +14,7 @@
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",
     "count": "cloc ./",
-    "postinstall": "bartlet-cli --setup && source ~/.bash_profile"
+    "postinstall": "./postinstall.sh"
   },
   "files": [
     "src",
