@@ -1,37 +1,56 @@
 // #### HOOK ####
 
-<% if (props.type === 'react') {%>import React<% if (props.features.length > 0) {%>, {
-  <% if(props.features.includes('state')) {%>useState,<% } if(props.features.includes('effect')) {%>
-  useEffect,<% } %>
-}<% } %> from 'react'<% }
-if (props.features.includes('rbx')) {%>
+<%if (props.features.includes('state')) {%>
 
-// Bulma component library "rbx"
-import {
-  Title,
-} from 'rbx'
-import "rbx/index.css"<% } 
-if(props.features.includes('router')) {%>
-
-// React Router
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-} from 'react-router-dom'<% }%>
-
-import './<%=props.name%>.css';
-
-const <%=props.name[0].toUpperCase() + props.name.slice(1)%> = () => {<% if(props.features.includes('state')) {%>
-  const [ state, setState ] = useState('test');
-  <% } %>
-  console.log('Launching <%=props.name%>!!');
+  // React State and Hooks
+  import {
+      useState,
+      useEffect,
+      useContext,
+  } from 'react';<% } 
+  if(props.features.includes('router')) {%>
   
-  return (
-      <React.Fragment>
-          <h1 className='<%=props.name%>__title'>Testing <%=props.name%>! And state: ${state}</h1>
-      </React.Fragment>
-  );
-};
-
-export default <%=props.name[0].toUpperCase() + props.name.slice(1)%>;
+  // React Router
+  import {
+      BrowserRouter as Router,
+      Route,
+      Switch,
+  } from 'react-router-dom';<% }
+  if(props.features.includes('firebase')) {%>
+  
+  // Firebase
+  import firebase from 'firebase/app';
+  import 'firebase/auth';
+  import 'firebase/storage';
+  
+  let GOOGLE_PROVIDER = new firebase.auth.GoogleAuthProvider();
+  GOOGLE_PROVIDER.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  <% } %>
+  
+  const <%=props.name%> = () => {<% if(props.features.includes('state')) {%>
+      const [ state, setState ] = useState(null);
+      <% } if(props.features.includes('firebase')) {%>
+      const [user, setuUser] = useState(null);
+      
+      useEffect(() => {
+          firebase.auth().signInWithPopup(GOOGLE_PROVIDER).then(response => {
+              console.log('Sign in completed');
+              setUser(response);
+          }).catch(err => {
+              console.log('error upon signing in: ', err)
+          });
+      }, []);
+      <%}%>    
+      useEffect(() => {
+          const updateTimer = setTimeout(() => {
+              setState('Async <%=props.name%> hook state update');
+          }, 2000);
+          
+          return () => clearTimeout(timer);
+      }, [state]);
+      
+      console.log('Launching <%=props.name%> hook!!');
+      return [state, setState];
+  };
+  
+  export default <%=props.name%>;

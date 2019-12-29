@@ -18,7 +18,7 @@ export default {
         toolbox.printHeader();
 
         // Select React prompt steps
-        const questions = toolbox.reactSteps();
+        const questions = toolbox.reactSteps('context');
         
         // Remove the prompt about template selection, we already know is: context
         questions.shift();
@@ -50,14 +50,8 @@ export default {
                 props: answers,
                 target: answers.path,
                 folder_name: answers.name,
-                index_template: `${answers.type}-index`,
+                index_template: `es6-index`,
                 file_template: `${answers.type}-${answers.template}`,
-            });
-
-            await toolbox.fileOut({
-                props: answers,
-                target: `${answers.path}/${answers.name}/${answers.name}.css`,
-                template: `${answers.type}-${answers.template}-css`,
             });
 
             process.exit();
