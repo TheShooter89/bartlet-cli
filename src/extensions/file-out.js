@@ -27,6 +27,6 @@ export default (toolbox) => {
         }
         index_spinner.succeed(colorprint.bold.italic.green(`[SUCCESS] created file: '${rel_path}'`));
         
-        //return Promise.resolve(isCreatedIndexJS);
+        //
     };
 };
