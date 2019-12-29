@@ -1,6 +1,6 @@
 {
   "name": "bartlet-cli",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "bartlet-cli CLI",
   "private": true,
   "bin": {
