@@ -14,7 +14,7 @@
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",
     "count": "cloc ./",
-    "postinstall": "bash ./postinstall.sh"
+    "postinstall": "bash ./tab-completion.sh"
   },
   "files": [
     "src",
