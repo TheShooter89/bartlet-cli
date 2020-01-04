@@ -45,15 +45,16 @@ export default {
             __DEBUG_MODE ? toolbox.print.info('new answers.template: ' + JSON.stringify(answers.template)) : null;
             
             // Write a new folder containing index.js and context code file
-            await toolbox.folderOut({
+            await toolbox.writeOut({
                 props: answers,
-                target: answers.path,
-                folder_name: answers.name,
-                index_template: `${answers.type}-index`,
-                file_template: `${answers.type}-${answers.template}`,
+                outPath: `${answers.path}/${answers.name}`,
+                name: answers.name,
+                template: `${answers.type}-${answers.template}`,
+                needCSS: answers.template === 'component' ? true : false,
+                indexType: answers.template === 'component' ? 'react' : 'es6',
             });
             
-            const skip = [
+            /* const skip = [
                 'hook',
                 'context',
             ];
@@ -65,7 +66,7 @@ export default {
                     target: `${answers.path}/${answers.name}/${answers.name}.css`,
                     template: `${answers.type}-${answers.template}-css`,
                 });
-            }
+            } */
             //return Promise.resolve(answers);
             process.exit();
         });

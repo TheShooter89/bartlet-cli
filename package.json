@@ -13,8 +13,7 @@
     "watch": "jest --watch",
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage",
-    "count": "cloc ./",
-    "postinstall": "bash ./tab-completion.sh"
+    "count": "cloc ./"
   },
   "files": [
     "src",

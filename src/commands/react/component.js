@@ -18,7 +18,7 @@ export default {
         toolbox.printHeader();
 
         // Select React prompt steps
-        const questions = toolbox.reactSteps();
+        const questions = toolbox.reactSteps('component');
         
         // Remove the prompt about template selection, we already know is: component
         questions.shift();
@@ -46,19 +46,20 @@ export default {
             __DEBUG_MODE ? toolbox.print.info('new answers.template: ' + JSON.stringify(answers.template)) : null;
             
             // Write a new folder containing index.js and component code file
-            await toolbox.folderOut({
+            await toolbox.writeOut({
                 props: answers,
-                target: answers.path,
-                folder_name: answers.name,
-                index_template: `${answers.type}-index`,
-                file_template: `${answers.type}-${answers.template}`,
+                outPath: `${answers.path}/${answers.name}`,
+                name: answers.name,
+                template: 'react-component',
+                needCSS: true,
+                indexType: 'react',
             });
 
-            await toolbox.fileOut({
+            /* await toolbox.fileOut({
                 props: answers,
                 target: `${answers.path}/${answers.name}/${answers.name}.css`,
                 template: `${answers.type}-${answers.template}-css`,
-            });
+            }); */
 
             process.exit();
         });

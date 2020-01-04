@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 
 export default (toolbox) => {
-    toolbox.reactSteps = (external_template = 'component') => {
+    toolbox.reactSteps = (external_template) => {
         //toolbox.print.info(`called 'print-header' extension`)
         const colorprint = toolbox.print.colors;
 
@@ -41,7 +41,6 @@ export default (toolbox) => {
                         {
                             name: 'React Router',
                             value: 'router',
-                            checked: (current_template === 'component' ? true : false),
                         },
                         {
                             name: 'RbxJs Bulma React Components',

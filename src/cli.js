@@ -17,7 +17,7 @@ async function run () {
     react: ['component', 'hook', 'context',],
     next: ['page',],
     node: ['es6', 'cjs',],
-    'import-template': ['',],
+    script: ['',],
   };
   complete.tree(comp_tree);
   

@@ -46,12 +46,12 @@ export default {
             __DEBUG_MODE ? toolbox.print.info('new answers.template: ' + JSON.stringify(answers.template)) : null;
             
             // Write a new folder containing index.js and hook code file
-            await toolbox.folderOut({
+            await toolbox.writeOut({
                 props: answers,
-                target: answers.path,
-                folder_name: answers.name,
-                index_template: `es6-index`,
-                file_template: `${answers.type}-${answers.template}`,
+                outPath: `${answers.path}/${answers.name}`,
+                name: answers.name,
+                template: 'react-hook',
+                indexType: 'es6',
             });
             
             process.exit();
